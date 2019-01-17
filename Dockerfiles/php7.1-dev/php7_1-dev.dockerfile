@@ -44,12 +44,13 @@ RUN docker-php-ext-install intl \
 	&& docker-php-ext-install \
 		-j$(nproc) \
 		gd \
+		mongodb \
 	&& docker-php-ext-configure gd \
 		--enable-gd-native-ttf \
 		--with-jpeg-dir=/usr/include/ \
 		--with-freetype-dir=/usr/include/freetype2 \
-	&& docker-php-ext-install intl \
-	&& docker-php-ext-enable memcached
+	&& docker-php-ext-enable memcached \
+	&& docker-php-ext-enable mongodb
 
 # Удаление не нужных зависимостей
 RUN apt-get purge -y \
