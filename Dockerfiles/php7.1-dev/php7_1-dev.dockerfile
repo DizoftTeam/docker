@@ -11,8 +11,6 @@ RUN apt-get update \
 		libmemcached-dev \
 		zlib1g-dev \
 		curl \
-		wget \
-		git \
 		libfreetype6-dev \
 		libjpeg62-turbo-dev \
 		libxslt-dev \
@@ -34,17 +32,13 @@ RUN apt-get update \
 		pdo \
 		json \
 		bcmath \
+		gd \
 	&& pecl install \
 		memcached \
 		mongodb
 
 # Конфигурирование некоторых расширений
-RUN docker-php-ext-install intl \
-	&& docker-php-ext-configure intl \
-	&& docker-php-ext-install \
-		-j$(nproc) \
-		gd \
-		mongodb \
+RUN docker-php-ext-configure intl \
 	&& docker-php-ext-configure gd \
 		--enable-gd-native-ttf \
 		--with-jpeg-dir=/usr/include/ \
