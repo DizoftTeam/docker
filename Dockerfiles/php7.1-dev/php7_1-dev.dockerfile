@@ -11,6 +11,7 @@ RUN apt-get update \
 		libmemcached-dev \
 		zlib1g-dev \
 		curl \
+		git \
 		libfreetype6-dev \
 		libjpeg62-turbo-dev \
 		libxslt-dev \
