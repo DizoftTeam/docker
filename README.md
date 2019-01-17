@@ -15,9 +15,12 @@
 ```dockerfile
 RUN apt-get update \
 	&& apt-get install \
-	git \
-	curl
+		git \
+		curl \
+	&& apt-get update
 ```
+
+**TIP**: обрати внимание на табуляцию
 
 ## Структура папок
 

@@ -34,20 +34,20 @@ RUN apt-get update \
 		pdo \
 		json \
 		bcmath \
-		&& pecl install \
-			memcached \
-			mongodb
+	&& pecl install \
+		memcached \
+		mongodb
 
 # Конфигурирование некоторых расширений
 RUN docker-php-ext-install intl \
 	&& docker-php-ext-configure intl \
 	&& docker-php-ext-install \
-			-j$(nproc) \
-			gd \
+		-j$(nproc) \
+		gd \
 	&& docker-php-ext-configure gd \
-			--enable-gd-native-ttf \
-			--with-jpeg-dir=/usr/include/ \
-    	--with-freetype-dir=/usr/include/freetype2 \
+		--enable-gd-native-ttf \
+		--with-jpeg-dir=/usr/include/ \
+		--with-freetype-dir=/usr/include/freetype2 \
 	&& docker-php-ext-install intl \
 	&& docker-php-ext-enable memcached
 
