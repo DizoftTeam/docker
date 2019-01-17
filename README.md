@@ -12,12 +12,13 @@
 Если в данной диррективе описывается большой блок, то необходимо _логическое И_ переносить на новую строку.
 
 Например:
+
 ```dockerfile
 RUN apt-get update \
-	&& apt-get install \
-		git \
-		curl \
-	&& apt-get update
+  && apt-get install \
+    git \
+    curl \
+  && apt-get update
 ```
 
 **TIP**: обрати внимание на табуляцию
