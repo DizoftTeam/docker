@@ -24,3 +24,5 @@
 
 - development:
   - Add sonar-scanner docker image
+  - Add site stage for graph of deps
+  - Need resolve github pipelines
