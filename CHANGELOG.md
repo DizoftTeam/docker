@@ -19,3 +19,8 @@
   - Add readme more info
   - Update `.gitignore` for future scripts
   - Add to `php7.1-dev` image __xdebug__
+
+## 2019-01-25 Fri <ruslan.mahin1@gmail.com>
+
+- development:
+  - Add sonar-scanner docker image
