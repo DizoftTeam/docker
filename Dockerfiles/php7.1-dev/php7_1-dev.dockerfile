@@ -47,6 +47,10 @@ RUN docker-php-ext-configure intl \
 	&& docker-php-ext-enable memcached \
 	&& docker-php-ext-enable mongodb
 
+# Установка xdebug
+RUN pecl install xdebug \
+	&& docker-php-ext-enable xdebug
+
 # Удаление не нужных зависимостей
 RUN apt-get purge -y \
 	libssl-dev
