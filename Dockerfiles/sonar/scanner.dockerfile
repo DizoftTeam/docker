@@ -6,15 +6,15 @@ FROM debian:9
 LABEL maintainer="WiRight"
 
 # Установка зависимостей
-RUN mkdir -p /usr/local/sonarscanner \
-	&& cd /usr/local/sonarscanner \
-	&& apt-get update \
+RUN apt-get update \
 	&& apt-get install -y \
 		unzip \
 		wget
 
 # Установка sonar
-RUN wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip \
+RUN mkdir -p /usr/local/sonarscanner \
+	&& cd /usr/local/sonarscanner \
+	&& wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-linux.zip \
 	&& unzip sonar-scanner-cli-3.3.0.1492-linux.zip \
 	&& mv sonar-scanner-3.3.0.1492-linux/* ./ \
 	&& rm sonar-scanner-cli-3.3.0.1492-linux.zip \
