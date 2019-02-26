@@ -12,6 +12,7 @@ RUN apt-get update \
 		zlib1g-dev \
 		curl \
 		git \
+		unzip \
 		libfreetype6-dev \
 		libjpeg62-turbo-dev \
 		libxslt-dev \
