@@ -26,3 +26,8 @@
   - Add sonar-scanner docker image
   - Add site stage for graph of deps
   - Need resolve github pipelines
+
+## 2019-03-04 Mon <ruslan.mahin1@gmail.com>
+
+- development:
+  - Add minecraft image
