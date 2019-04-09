@@ -1,5 +1,5 @@
 # Наследуемся от базового образа PHP
-FROM php:7.2.16-fpm-alpine
+FROM php:7.2.17-cli-alpine3.9
 
 # Имя разработчика образа
 LABEL MAINTAINER="WiRight"
@@ -20,6 +20,7 @@ RUN apk update \
 		build-base \
 		wget \
 		git \
+		tzdata \
 		autoconf \
 	&& apk add --no-cache \
 		autoconf \
@@ -34,17 +35,14 @@ RUN apk update \
 		libjpeg-turbo-dev \
 		libxslt-dev \
 		icu-dev \
-		# libmcrypt-dev \
 		libxml2-dev \
 		libpng-dev \
 	&& pecl install \
-		# mcrypt-1.0.2 \
 		memcached \
 		mongodb \
 	&& docker-php-ext-install \
 		-j$(nproc) \
 		iconv \
-		# mcrypt \
 		mbstring \
 		mysqli \
 		pdo_mysql \
@@ -71,12 +69,12 @@ RUN docker-php-ext-configure intl \
 RUN pecl install xdebug \
 	&& docker-php-ext-enable xdebug
 
+# Установка временной зоны
+RUN cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # Чистим некоторые не нужные зависимости
 RUN apk del buildDeps \
 	&& rm -rf /var/cache/apk/*
-
-# Установка временной зоны
-RUN cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Установка composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
@@ -88,4 +86,4 @@ ADD php.ini /usr/local/etc/php/conf.d/40-custom.ini
 WORKDIR /var/www/html
 
 # Команда контейнера
-CMD ["php-fpm"]
+CMD ["php"]
