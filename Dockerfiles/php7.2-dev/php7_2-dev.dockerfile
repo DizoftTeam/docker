@@ -4,6 +4,9 @@ FROM php:7.2.16-fpm-alpine
 # Имя разработчика образа
 LABEL MAINTAINER="WiRight"
 
+# Переменная для установки временной зоны
+ENV TZ=Europe/Moscow
+
 # Установка базовых необходимых зависимостей
 RUN apk update \
 	&& apk add \
@@ -71,6 +74,9 @@ RUN pecl install xdebug \
 # Чистим некоторые не нужные зависимости
 RUN apk del buildDeps \
 	&& rm -rf /var/cache/apk/*
+
+# Установка временной зоны
+RUN cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Установка composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer

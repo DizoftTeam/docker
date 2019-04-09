@@ -4,6 +4,9 @@ FROM php:7.2.17-cli-alpine3.9
 # Имя разработчика образа
 LABEL MAINTAINER="WiRight"
 
+# Переменная для установки временной зоны
+ENV TZ=Europe/Moscow
+
 # Установка базовых необходимых зависимостей
 RUN apk update \
 	&& apk add \
@@ -17,6 +20,7 @@ RUN apk update \
 		build-base \
 		wget \
 		git \
+		tzdata \
 		autoconf \
 	&& apk add --no-cache \
 		autoconf \
@@ -64,6 +68,9 @@ RUN docker-php-ext-configure intl \
 # Установка xdebug
 RUN pecl install xdebug \
 	&& docker-php-ext-enable xdebug
+
+# Установка временной зоны
+RUN cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Чистим некоторые не нужные зависимости
 RUN apk del buildDeps \
