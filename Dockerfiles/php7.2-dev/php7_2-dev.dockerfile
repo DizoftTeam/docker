@@ -21,11 +21,14 @@ RUN apk update \
 		wget \
 		git \
 		autoconf \
+		tzdata \
 	&& apk add --no-cache \
 		autoconf \
 		postgresql-dev \
 		openssl-dev \
 		libmemcached-dev \
+		rabbitmq-c-dev \
+		libssh2 \
 		zlib-dev \
 		curl \
 		git \
@@ -34,17 +37,15 @@ RUN apk update \
 		libjpeg-turbo-dev \
 		libxslt-dev \
 		icu-dev \
-		# libmcrypt-dev \
 		libxml2-dev \
 		libpng-dev \
 	&& pecl install \
-		# mcrypt-1.0.2 \
 		memcached \
 		mongodb \
+		amqp \
 	&& docker-php-ext-install \
 		-j$(nproc) \
 		iconv \
-		# mcrypt \
 		mbstring \
 		mysqli \
 		pdo_mysql \
@@ -65,18 +66,19 @@ RUN docker-php-ext-configure intl \
 		--with-jpeg-dir=/usr/include/ \
 		--with-freetype-dir=/usr/include/freetype2 \
 	&& docker-php-ext-enable memcached \
-	&& docker-php-ext-enable mongodb
+	&& docker-php-ext-enable mongodb \
+	&& docker-php-ext-enable amqp
 
 # Установка xdebug
 RUN pecl install xdebug \
 	&& docker-php-ext-enable xdebug
 
+# Установка временной зоны
+RUN cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 # Чистим некоторые не нужные зависимости
 RUN apk del buildDeps \
 	&& rm -rf /var/cache/apk/*
-
-# Установка временной зоны
-RUN cp /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Установка composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
