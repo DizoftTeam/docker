@@ -23,6 +23,7 @@ RUN apk update \
 		autoconf \
 		tzdata \
 	&& apk add --no-cache \
+		bash \
 		autoconf \
 		postgresql-dev \
 		openssl-dev \
