@@ -27,6 +27,8 @@ RUN apk update \
 		postgresql-dev \
 		openssl-dev \
 		libmemcached-dev \
+		rabbitmq-c-dev \
+		libssh2 \
 		zlib-dev \
 		curl \
 		git \
@@ -40,6 +42,7 @@ RUN apk update \
 	&& pecl install \
 		memcached \
 		mongodb \
+		amqp \
 	&& docker-php-ext-install \
 		-j$(nproc) \
 		iconv \
@@ -63,7 +66,8 @@ RUN docker-php-ext-configure intl \
 		--with-jpeg-dir=/usr/include/ \
 		--with-freetype-dir=/usr/include/freetype2 \
 	&& docker-php-ext-enable memcached \
-	&& docker-php-ext-enable mongodb
+	&& docker-php-ext-enable mongodb \
+	&& docker-php-ext-enable amqp
 
 # Установка xdebug
 RUN pecl install xdebug \
