@@ -45,7 +45,7 @@ RUN apt-get update \
 
 Так же, содержит пакет __xdebug__ (без настроек)
 
-#### php7.1-yii2-dev
+#### php7.1-yii2-dev (@deprecated)
 
 Описывает базовый образ php7.1 для проектов на yii2
 
