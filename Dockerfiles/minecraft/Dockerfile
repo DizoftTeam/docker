@@ -7,7 +7,8 @@ LABEL MAINTAINER="WiRight"
 # Устанавливаем базовые зависимости
 RUN apk update \
 	&& apk add --no-cache \
-		wget
+		wget \
+		screen
 
 # Рабочая папка
 WORKDIR /app
@@ -16,13 +17,15 @@ WORKDIR /app
 RUN wget \
 	--https-only \
 	--no-directories \
-	https://launcher.mojang.com/v1/objects/3737db93722a9e39eeada7c27e7aca28b144ffa7/server.jar
+	https://launcher.mojang.com/v1/objects/c5f6fb23c3876461d46ec380421e42b289789530/server.jar
 
 # Соглашаемся с пользовательским соглашением, иначе не стартанет
-RUN echo 'eula=true' >> /app/eula.txt
+RUN echo 'eula=true' >> /app/eula.txt \
+	# Добавление пользователя AdminRdip в качестве администратора
+	&& echo "AdminRdip" >> /app/ops.txt
 
 # Копируем настройки сервера
-COPY server.properties /app/
+COPY mine_1.16.2.server.properties /app/server.properties
 
 # Расшариваем порт 25565
 EXPOSE 25565
